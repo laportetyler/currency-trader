@@ -1,0 +1,10 @@
+[mysqld]
+character-set-server=latin1
+collation-server=latin1_swedish_ci
+sql-mode = NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+lower_case_table_names = 0
+
+bind-address=0.0.0.0
+max_connections = 1000
+max_allowed_packet = 500M

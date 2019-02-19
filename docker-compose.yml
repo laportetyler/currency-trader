@@ -1,0 +1,42 @@
+version: "3"
+
+services:
+
+  mysql:
+    build:
+      context: ./database/
+    container_name: mysql
+    image: mysql:5.7
+    restart: on-failure
+    environment:
+      - MYSQL_DATABASE=currency_converter
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+    ports:
+      - "4306:3306"
+    networks:
+      - db-network
+    volumes:
+      - ./database/data:/docker-entrypoint-initdb.d:ro
+
+  app:
+    restart: always
+    build: ./
+    working_dir: /app
+    volumes:
+      - ./src:/app/src
+      - ./react-client:/app/react-client
+      - ./pom.xml:/app/pom.xml
+      - ~/.m2:/root/.m2
+    ports:
+      - "8080:8080"
+    networks:
+      - db-network
+    command: mvn clean spring-boot:run
+    depends_on:
+      - mysql
+
+networks:
+  db-network:
+    driver: bridge
