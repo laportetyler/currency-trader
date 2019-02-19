@@ -12,7 +12,6 @@ export default class CurrencyTypeSelector extends Component {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <div>{this.props.title}</div>
